@@ -9,11 +9,12 @@
 <EditText
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:hint="Your Message Here"
+    android:hint="Your Mobile number Here"
+    android:inputType="phone"
     android:id="@+id/message"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/send"
-        android:text="Send Message"/>
+        android:id="@+id/register"
+        android:text="Register"/>
 </LinearLayout>

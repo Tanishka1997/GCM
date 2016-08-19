@@ -19,27 +19,38 @@ import java.net.URLEncoder;
  */
 public class SendMessage {
 
-    public SendMessage(String token) throws IOException{
-    connect("Hello Tanishka",token);
+    public SendMessage(String mobile) throws IOException{
+    connect("Hello Tanishka",mobile);
     }
 
-    public void connect(String message,String token) throws IOException {
+    public void connect(String message,String mobile) throws IOException {
 
-        String gcm_url ="http://172.32.1.161/gcm_sample/connect.php";
+        String gcm_url ="http://192.168.1.5/gcm_sample/connect.php";
         URL url = new URL(gcm_url);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         try {
             Log.w("Send","abcd");
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);
+            connection.setDoInput(true);
             OutputStream outputStream=connection.getOutputStream();
             BufferedWriter bufferedWriter=new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
             String data=URLEncoder.encode("message","UTF-8")+"="+URLEncoder.encode(message,"UTF-8")+"&"+
-            URLEncoder.encode("token","UTF-8")+"="+URLEncoder.encode(token,"UTF-8");
+            URLEncoder.encode("mobile","UTF-8")+"="+URLEncoder.encode(mobile,"UTF-8");
             bufferedWriter.write(data);
             bufferedWriter.flush();
             outputStream.close();
-            Log.w("SendMessage","1234");
+            InputStream inputStream = connection.getInputStream();
+
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
+            String response = "";
+            String line="";
+
+            while ((line = bufferedReader.readLine())!=null);
+            response+=line;
+            bufferedReader.close();
+            inputStream.close();
+            Log.w("SendMessage",response);
 
         }finally {
             connection.disconnect();

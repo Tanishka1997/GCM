@@ -8,7 +8,10 @@ import android.util.Log;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -21,14 +24,14 @@ import java.net.URLEncoder;
 public class GCMRegisterationIntentService extends IntentService {
     public static final String REGISTERATION_SUCCESS="RegisterationSuccess";
     public static final String REGISTERATION_ERROR="RegisterationError";
-    String name;
+    String mobile;
     public GCMRegisterationIntentService() {
         super("");
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        name=intent.getExtras().getString("message");
+        mobile=intent.getSerializableExtra("mobile").toString();
         registerToken();
 
     }
@@ -40,7 +43,7 @@ public class GCMRegisterationIntentService extends IntentService {
            InstanceID instanceID=InstanceID.getInstance(this);
            token=instanceID.getToken(getString(R.string.gcm_defaultSenderId), GoogleCloudMessaging.INSTANCE_ID_SCOPE,null);
            Log.w("GCMRegisteration","token:"+token);
-           String reg="http://172.32.9.60/gcm_sample/register.php";
+           String reg="http://192.168.1.5/gcm_sample/register.php";
            URL url=new URL(reg);
            HttpURLConnection urlConnection=(HttpURLConnection) url.openConnection();
            try {
@@ -48,11 +51,22 @@ public class GCMRegisterationIntentService extends IntentService {
                urlConnection.setDoOutput(true);
                OutputStream outputStream=urlConnection.getOutputStream();
                BufferedWriter bufferedWriter=new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
-               String data= URLEncoder.encode("name","UTF-8")+"="+URLEncoder.encode(name,"UTF-8")+"&"+
+               String data= URLEncoder.encode("mobile","UTF-8")+"="+URLEncoder.encode(mobile,"UTF-8")+"&"+
                        URLEncoder.encode("token","UTF-8")+"="+URLEncoder.encode(token,"UTF-8");
                bufferedWriter.write(data);
                bufferedWriter.flush();
                outputStream.close();
+               InputStream inputStream = urlConnection.getInputStream();
+
+               BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
+               String response = "";
+               String line="";
+
+               while ((line = bufferedReader.readLine())!=null);
+               response+=line;
+               bufferedReader.close();
+               inputStream.close();
+
            }finally {
                urlConnection.disconnect();
            }

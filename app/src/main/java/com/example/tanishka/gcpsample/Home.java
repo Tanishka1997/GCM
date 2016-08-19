@@ -29,7 +29,7 @@ public class Home extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private BroadcastReceiver broadcastReceiver;
     private String token;
-    EditText message;
+    EditText mobile;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
    Context context;
@@ -37,7 +37,7 @@ public class Home extends Fragment {
     private String mParam1;
     private String mParam2;
     private Intent i;
-
+    String Mobile;
 
     public Home() {
         // Required empty public constructor
@@ -96,15 +96,17 @@ public class Home extends Fragment {
                 Toast.makeText(getActivity(), "not installed play services", Toast.LENGTH_LONG).show();
             }
         } else {
-            Button button = (Button) v.findViewById(R.id.send);
-            message = (EditText) v.findViewById(R.id.message);
+            Button button = (Button) v.findViewById(R.id.register);
+            mobile= (EditText) v.findViewById(R.id.message);
             context = getActivity();
             button.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
+
                     i = new Intent(context, GCMRegisterationIntentService.class);
-                    i.putExtra("message", message.toString());
+                    Mobile=mobile.getText().toString();
+                    i.putExtra("mobile", Mobile);
                     getActivity().startService(i);
                 }
             });
@@ -117,7 +119,7 @@ public class Home extends Fragment {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                new SendMessage(token);
+                new SendMessage(Mobile);
             }catch (Exception e){
 
             }
