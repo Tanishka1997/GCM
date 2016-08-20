@@ -8,6 +8,8 @@ import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,8 +73,15 @@ public class Home extends Fragment {
             public void onReceive(Context context, Intent intent) {
                 if (intent.getAction().equals(GCMRegisterationIntentService.REGISTERATION_SUCCESS)){
                     token=intent.getStringExtra("token");
-                    Toast.makeText(getActivity(),"Registeration success"+token,Toast.LENGTH_LONG).show();
-                    new connect_it().execute();
+                    Toast.makeText(getActivity(),"Registeration success",Toast.LENGTH_LONG).show();
+                    RegisterPreferences.setMobile(getActivity(),Mobile);
+                    Fragment fragment = new SendFragment();
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.frame, fragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                    // new connect_it().execute();
                 }
                 else if(intent.getAction().equals(GCMRegisterationIntentService.REGISTERATION_ERROR)){
                     Toast.makeText(getActivity(),"Registeration Error",Toast.LENGTH_LONG).show();
@@ -97,7 +106,7 @@ public class Home extends Fragment {
             }
         } else {
             Button button = (Button) v.findViewById(R.id.register);
-            mobile= (EditText) v.findViewById(R.id.message);
+            mobile= (EditText) v.findViewById(R.id.mobile);
             context = getActivity();
             button.setOnClickListener(new View.OnClickListener() {
 
@@ -115,6 +124,7 @@ public class Home extends Fragment {
         }
         return v;
     }
+   /*
     private class connect_it extends AsyncTask<Void,Void,Void> {
         @Override
         protected Void doInBackground(Void... voids) {
@@ -126,7 +136,7 @@ public class Home extends Fragment {
             return null;
         }
     }
-
+*/
     @Override
     public void onResume() {
         super.onResume();

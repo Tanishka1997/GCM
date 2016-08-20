@@ -19,8 +19,8 @@ import java.net.URLEncoder;
  */
 public class SendMessage {
 
-    public SendMessage(String mobile) throws IOException{
-    connect("Hello Tanishka",mobile);
+    public SendMessage(String mobile,String message) throws IOException{
+        connect(message,mobile);
     }
 
     public void connect(String message,String mobile) throws IOException {
@@ -29,7 +29,6 @@ public class SendMessage {
         URL url = new URL(gcm_url);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         try {
-            Log.w("Send","abcd");
             connection.setRequestMethod("POST");
             connection.setDoOutput(true);
             connection.setDoInput(true);
@@ -54,7 +53,6 @@ public class SendMessage {
 
         }finally {
             connection.disconnect();
-            Log.w("SendMessage","12345");
         }
     }
 }

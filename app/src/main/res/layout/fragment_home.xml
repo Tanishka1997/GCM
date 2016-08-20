@@ -11,7 +11,7 @@
     android:layout_height="wrap_content"
     android:hint="Your Mobile number Here"
     android:inputType="phone"
-    android:id="@+id/message"/>
+    android:id="@+id/mobile"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -25,11 +25,20 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FragmentManager fragmentManager=getSupportFragmentManager();
-        Home fragment=(Home) fragmentManager.findFragmentById(R.id.frame);
-        if(fragment==null){
-         fragment=Home.newInstance();
-        fragmentManager.beginTransaction().replace(R.id.frame,fragment).commit();
+        if(RegisterPreferences.getStoredMobile(this)==null) {
+            Home fragment = (Home) fragmentManager.findFragmentById(R.id.frame);
+            if (fragment == null) {
+                fragment = Home.newInstance();
+                fragmentManager.beginTransaction().replace(R.id.frame, fragment).commit();
+            }
         }
+        else{
+            SendFragment fragment_send=(SendFragment) fragmentManager.findFragmentById(R.id.frame);
+            if (fragment_send==null){
+                fragment_send =SendFragment.newInstance();
+                fragmentManager.beginTransaction().replace(R.id.frame,fragment_send).commit();
+            }
 
+        }
     }
 }
