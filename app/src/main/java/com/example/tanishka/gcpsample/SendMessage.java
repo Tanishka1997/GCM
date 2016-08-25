@@ -25,7 +25,7 @@ public class SendMessage {
 
     public void connect(String message,String mobile) throws IOException {
 
-        String gcm_url ="http://192.168.1.5/gcm_sample/connect.php";
+        String gcm_url ="http://gcpdata.net16.net/connect.php";
         URL url = new URL(gcm_url);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         try {

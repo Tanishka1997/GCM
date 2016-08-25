@@ -43,7 +43,7 @@ public class GCMRegisterationIntentService extends IntentService {
            InstanceID instanceID=InstanceID.getInstance(this);
            token=instanceID.getToken(getString(R.string.gcm_defaultSenderId), GoogleCloudMessaging.INSTANCE_ID_SCOPE,null);
            Log.w("GCMRegisteration","token:"+token);
-           String reg="http://192.168.1.5/gcm_sample/register.php";
+           String reg="http://gcpdata.net16.net/register.php";
            URL url=new URL(reg);
            HttpURLConnection urlConnection=(HttpURLConnection) url.openConnection();
            try {
