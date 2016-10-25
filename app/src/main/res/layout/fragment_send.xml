@@ -9,7 +9,10 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:inputType="phone"
+=======
+>>>>>>> 7aa0d4e126124e7f589f4be8cc1411aee8aeea4e
         android:hint="To"
         android:id="@+id/to_send"/>
     <EditText
