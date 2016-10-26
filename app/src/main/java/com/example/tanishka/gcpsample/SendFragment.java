@@ -1,7 +1,9 @@
 package com.example.tanishka.gcpsample;
 
 
+import android.content.Context;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 /**
@@ -76,7 +79,14 @@ public class SendFragment extends Fragment {
             public void onClick(View v) {
                 Message=message.getText().toString();
                 Mobile=to_send.getText().toString();
+                ConnectivityManager cm=(ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+                boolean	isNetworkAvailable	=	cm.getActiveNetworkInfo()	!=	null;
+                boolean	isNetworkConnected	=	isNetworkAvailable	&&
+                        cm.getActiveNetworkInfo().isConnected();
+                if(isNetworkAvailable)
                 new  connect_it().execute();
+                else
+                    Toast.makeText(getActivity(),"No Internet Connectivity",Toast.LENGTH_LONG).show();
             }
         });
         return  v;

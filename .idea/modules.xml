@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-<<<<<<< HEAD
-      <module fileurl="file://$PROJECT_DIR$/GCM-master.iml" filepath="$PROJECT_DIR$/GCM-master.iml" />
-=======
-      <module fileurl="file://$PROJECT_DIR$/GCPsample.iml" filepath="$PROJECT_DIR$/GCPsample.iml" />
->>>>>>> 7aa0d4e126124e7f589f4be8cc1411aee8aeea4e
+      <module fileurl="file://$PROJECT_DIR$/GCM.iml" filepath="$PROJECT_DIR$/GCM.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
