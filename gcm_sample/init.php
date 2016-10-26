@@ -1,15 +1,15 @@
 <?php
 
 
-$mysql_user = ""//yr info;
-$mysql_pass = "" yr info;
-$server_name = ""//yr info;
-$db_name=""//yr info;
+$mysql_user = "";
+$mysql_pass = "";
+$server_name = "";
+$db_name="";
 $con = mysqli_connect($server_name,$mysql_user,$mysql_pass,$db_name);
 
 if(!$con)
 {
-	//echo "Connection Error.....".mysqli_connect_error();
+	 die("Connection Error");
 }
 else
 {

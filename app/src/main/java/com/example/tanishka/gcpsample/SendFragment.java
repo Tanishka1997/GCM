@@ -83,7 +83,7 @@ public class SendFragment extends Fragment {
                 boolean	isNetworkAvailable	=	cm.getActiveNetworkInfo()	!=	null;
                 boolean	isNetworkConnected	=	isNetworkAvailable	&&
                         cm.getActiveNetworkInfo().isConnected();
-                if(isNetworkAvailable)
+                if(isNetworkAvailable&&isNetworkConnected)
                 new  connect_it().execute();
                 else
                     Toast.makeText(getActivity(),"No Internet Connectivity",Toast.LENGTH_LONG).show();
