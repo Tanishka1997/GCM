@@ -132,7 +132,7 @@ public class SendFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            if(error!="")
+            if(!error.equals(""))
                 Toast.makeText(getActivity(),error,Toast.LENGTH_LONG).show();
         }
     }
