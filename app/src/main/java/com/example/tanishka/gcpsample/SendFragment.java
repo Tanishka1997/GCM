@@ -4,6 +4,7 @@ package com.example.tanishka.gcpsample;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketAddress;
 
 
 /**
@@ -79,30 +86,54 @@ public class SendFragment extends Fragment {
             public void onClick(View v) {
                 Message=message.getText().toString();
                 Mobile=to_send.getText().toString();
-                ConnectivityManager cm=(ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-                boolean	isNetworkAvailable	=	cm.getActiveNetworkInfo()	!=	null;
-                boolean	isNetworkConnected	=	isNetworkAvailable	&&
-                        cm.getActiveNetworkInfo().isConnected();
-                if(isNetworkAvailable&&isNetworkConnected)
-                new  connect_it().execute();
-                else
-                    Toast.makeText(getActivity(),"No Internet Connectivity",Toast.LENGTH_LONG).show();
+
+                new connect_it().execute();
             }
         });
         return  v;
     }
 
     private class connect_it extends AsyncTask<Void,Void,Void> {
+        private String error="";
+
         @Override
         protected Void doInBackground(Void... voids) {
             try {
+                ConnectivityManager cm=(ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+                boolean	isNetworkAvailable	=	cm.getActiveNetworkInfo()	!=	null;
+                boolean	isNetworkConnected	=	isNetworkAvailable	&&
+                        cm.getActiveNetworkInfo().isConnected();
+                NetworkInfo nf=cm.getActiveNetworkInfo();
+                if(isNetworkAvailable&&isNetworkConnected) {
+                    try {
+                        SocketAddress addr=new InetSocketAddress("www.svnit.ac.in",80);
+                        Socket sock=new Socket();
+                        int timeout=10000;
+                        sock.connect(addr,timeout);
 
-                new SendMessage(Mobile,Message);
+                        new SendMessage(Mobile,Message);
+
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        error="Network State Timed Out";
+                    }
+                }
+                else
+                   error="No Internet Connectivity";
+
 
             }catch (Exception e){
 
             }
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            if(error!="")
+                Toast.makeText(getActivity(),error,Toast.LENGTH_LONG).show();
         }
     }
     @Override
