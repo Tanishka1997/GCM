@@ -5,6 +5,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,6 +21,11 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketAddress;
 
 
 /**
@@ -74,6 +81,7 @@ public class Home extends Fragment {
                 if (intent.getAction().equals(GCMRegisterationIntentService.REGISTERATION_SUCCESS)){
                     token=intent.getStringExtra("token");
                     Toast.makeText(getActivity(),"Registeration success",Toast.LENGTH_LONG).show();
+                    new connect_it().execute();
                     RegisterPreferences.setMobile(getActivity(),Mobile);
                     Fragment fragment = new SendFragment();
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -137,6 +145,50 @@ public class Home extends Fragment {
         }
     }
 */
+   private class connect_it extends AsyncTask<Void,Void,Void> {
+       private String error="";
+
+       @Override
+       protected Void doInBackground(Void... voids) {
+           try {
+               ConnectivityManager cm=(ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+               boolean	isNetworkAvailable	=	cm.getActiveNetworkInfo()	!=	null;
+               boolean	isNetworkConnected	=	isNetworkAvailable	&&
+                       cm.getActiveNetworkInfo().isConnected();
+               NetworkInfo nf=cm.getActiveNetworkInfo();
+               if(isNetworkAvailable&&isNetworkConnected) {
+                   try {
+                       SocketAddress addr=new InetSocketAddress("www.svnit.ac.in",80);
+                       Socket sock=new Socket();
+                       int timeout=10000;
+                       sock.connect(addr,timeout);
+
+                       new SendMessage(Mobile,"You have successfully registered");
+
+
+                   } catch (IOException e) {
+                       e.printStackTrace();
+                       error="Network State Timed Out";
+                   }
+               }
+               else
+                   error="No Internet Connectivity";
+
+
+           }catch (Exception e){
+
+           }
+           return null;
+       }
+
+       @Override
+       protected void onPostExecute(Void aVoid) {
+           super.onPostExecute(aVoid);
+           if(!error.equals(""))
+               Toast.makeText(getActivity(),error,Toast.LENGTH_LONG).show();
+       }
+   }
+
     @Override
     public void onResume() {
         super.onResume();
