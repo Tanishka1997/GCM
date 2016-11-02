@@ -83,13 +83,9 @@ public class Home extends Fragment {
                     Toast.makeText(getActivity(),"Registeration success",Toast.LENGTH_LONG).show();
                     new connect_it().execute();
                     RegisterPreferences.setMobile(getActivity(),Mobile);
-                    Fragment fragment = new SendFragment();
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.frame, fragment);
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
-                    // new connect_it().execute();
+                    Intent i=new Intent(getActivity(),TabViewActivity.class);
+                    startActivity(i);
+
                 }
                 else if(intent.getAction().equals(GCMRegisterationIntentService.REGISTERATION_ERROR)){
                     Toast.makeText(getActivity(),"Registeration Error",Toast.LENGTH_LONG).show();

@@ -18,14 +18,15 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import java.io.IOException;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FragmentManager fragmentManager=getSupportFragmentManager();
+
         if(RegisterPreferences.getStoredMobile(this)==null) {
+            FragmentManager fragmentManager=getSupportFragmentManager();
             Home fragment = (Home) fragmentManager.findFragmentById(R.id.frame);
             if (fragment == null) {
                 fragment = Home.newInstance();
@@ -33,12 +34,10 @@ public class MainActivity extends FragmentActivity {
             }
         }
         else{
-            SendFragment fragment_send=(SendFragment) fragmentManager.findFragmentById(R.id.frame);
-            if (fragment_send==null){
-                fragment_send =SendFragment.newInstance();
-                fragmentManager.beginTransaction().replace(R.id.frame,fragment_send).commit();
-            }
 
+            Intent intent=new Intent(this,TabViewActivity.class);
+            startActivity(intent);
+            this.finish();
         }
     }
 }
