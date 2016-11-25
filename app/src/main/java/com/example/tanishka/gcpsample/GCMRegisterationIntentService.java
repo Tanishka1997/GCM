@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.google.android.gms.iid.InstanceID;
+
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -37,11 +37,10 @@ public class GCMRegisterationIntentService extends IntentService {
     }
    public void registerToken(){
        Intent intent;
-       String token;
+       String token="";
 
        try {
-           InstanceID instanceID=InstanceID.getInstance(this);
-           token=instanceID.getToken(getString(R.string.gcm_defaultSenderId), GoogleCloudMessaging.INSTANCE_ID_SCOPE,null);
+           token= GCMTokenRefresh.getToken();
            Log.w("GCMRegisteration","token:"+token);
            String reg="http://gcpdata.net16.net/register.php";
            URL url=new URL(reg);

@@ -3,11 +3,11 @@
 require "init.php";
 $message=$_POST["message"];
 $mobile=$_POST["mobile"];
-$key=""//yr  api;
+$key="AIzaSyDvkigQ7YzBgxoe7IyuMXxNoOoFAWRT0PY";//yr  api
 $headers=array('Authorization:key='.$key,'Content-Type:application/json');
 $sql="SELECT `Token` FROM `user` WHERE `Mobile`='$mobile'";
 $result=mysqli_query($con,$sql);
-$url="https://gcm-http.googleapis.com/gcm/send";
+$url="https://fcm.googleapis.com/fcm/send";
 if(mysqli_num_rows($result)>0){
 while($row=mysqli_fetch_assoc($result)){
 $token=$row["Token"];

@@ -20,7 +20,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
+
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -81,10 +81,11 @@ public class Home extends Fragment {
                 if (intent.getAction().equals(GCMRegisterationIntentService.REGISTERATION_SUCCESS)){
                     token=intent.getStringExtra("token");
                     Toast.makeText(getActivity(),"Registeration success",Toast.LENGTH_LONG).show();
-                    new connect_it().execute();
+                    //new connect_it().execute();
                     RegisterPreferences.setMobile(getActivity(),Mobile);
                     Intent i=new Intent(getActivity(),TabViewActivity.class);
                     startActivity(i);
+                    getActivity().finish();
 
                 }
                 else if(intent.getAction().equals(GCMRegisterationIntentService.REGISTERATION_ERROR)){
@@ -100,15 +101,7 @@ public class Home extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_home, container, false);
-        int resultcode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
-        if (resultcode != ConnectionResult.SUCCESS) {
-            if (GooglePlayServicesUtil.isUserRecoverableError(resultcode)) {
-                Toast.makeText(getActivity(), "device does not support or not installed play services", Toast.LENGTH_LONG).show();
-                GooglePlayServicesUtil.showErrorNotification(resultcode, getActivity());
-            } else {
-                Toast.makeText(getActivity(), "not installed play services", Toast.LENGTH_LONG).show();
-            }
-        } else {
+
             Button button = (Button) v.findViewById(R.id.register);
             mobile= (EditText) v.findViewById(R.id.mobile);
             context = getActivity();
@@ -125,7 +118,7 @@ public class Home extends Fragment {
             });
 
 
-        }
+
         return v;
     }
    /*

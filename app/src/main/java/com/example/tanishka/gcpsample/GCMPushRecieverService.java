@@ -10,17 +10,23 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
-import com.google.android.gms.gcm.GcmListenerService;
+
+import com.google.firebase.messaging.FirebaseMessagingService;
+import com.google.firebase.messaging.RemoteMessage;
+
+import java.util.Map;
 
 /**
  * Created by Tanishka on 10-07-2016.
  */
-public class GCMPushRecieverService extends GcmListenerService {
+public class GCMPushRecieverService extends FirebaseMessagingService {
     @Override
-    public void onMessageReceived(String from, Bundle data) {
-    sendNotification(data.getString("message"));
+    public void onMessageReceived(RemoteMessage message) {
+        String from=message.getFrom();
+        Map data=message.getData();
+        sendNotification(data);
     }
- public void sendNotification(String message){
+ public void sendNotification(Map message){
      Intent i=new Intent(this,MainActivity.class);
      i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
      PendingIntent pi=PendingIntent.getActivity(this,0,i,PendingIntent.FLAG_ONE_SHOT);
@@ -28,7 +34,7 @@ public class GCMPushRecieverService extends GcmListenerService {
      Notification notification= new NotificationCompat.Builder(this)
              .setSmallIcon(R.mipmap.ic_launcher)
              .setContentText("New Message")
-             .setContentText(message)
+             .setContentText(message.toString())
              .setSound(ringtone)
              .setAutoCancel(true)
              .setContentIntent(pi).build();
