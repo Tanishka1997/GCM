@@ -24,6 +24,7 @@ public class GCMTokenRefresh extends FirebaseInstanceIdService {
 
 public static String t;
     public static String getToken(){
+
         String refreshedToken=t;
         return refreshedToken;
     }
@@ -37,4 +38,5 @@ public static String t;
 
       //  sendRegistrationToServer(refreshedToken);
     }
+
 }

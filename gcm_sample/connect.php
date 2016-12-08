@@ -3,7 +3,7 @@
 require "init.php";
 $message=$_POST["message"];
 $mobile=$_POST["mobile"];
-$key="AIzaSyDvkigQ7YzBgxoe7IyuMXxNoOoFAWRT0PY";//yr  api
+$key="AIzaSyCMtXTFzGE9HOFoB4hxlChsJV1EC2Tth5Y";//yr  api
 $headers=array('Authorization:key='.$key,'Content-Type:application/json');
 $sql="SELECT `Token` FROM `user` WHERE `Mobile`='$mobile'";
 $result=mysqli_query($con,$sql);

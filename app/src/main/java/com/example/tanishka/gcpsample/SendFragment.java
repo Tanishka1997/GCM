@@ -106,10 +106,10 @@ public class SendFragment extends Fragment {
                 NetworkInfo nf=cm.getActiveNetworkInfo();
                 if(isNetworkAvailable&&isNetworkConnected) {
                     try {
-                        SocketAddress addr=new InetSocketAddress("www.svnit.ac.in",80);
-                        Socket sock=new Socket();
-                        int timeout=10000;
-                        sock.connect(addr,timeout);
+                       // SocketAddress addr=new InetSocketAddress("www.svnit.ac.in",80);
+                        //Socket sock=new Socket();
+                        //int timeout=10000;
+                        //sock.connect(addr,timeout);
 
                         new SendMessage(Mobile,Message);
 

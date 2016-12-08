@@ -21,10 +21,11 @@ public class SendMessage {
 
     public SendMessage(String mobile,String message) throws IOException{
         connect(message,mobile);
+
     }
 
     public void connect(String message,String mobile) throws IOException {
-
+        Log.w("Message",mobile);
         String gcm_url ="http://gcpdata.net16.net/connect.php";
         URL url = new URL(gcm_url);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
