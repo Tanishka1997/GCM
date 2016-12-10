@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.util.Log;
 
 
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -23,7 +24,7 @@ public class GCMPushRecieverService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage message) {
         String from=message.getFrom();
-        Map data=message.getData();
+        Map data= message.getData();
         sendNotification(data);
     }
  public void sendNotification(Map message){
@@ -34,7 +35,7 @@ public class GCMPushRecieverService extends FirebaseMessagingService {
      Notification notification= new NotificationCompat.Builder(this)
              .setSmallIcon(R.mipmap.ic_launcher)
              .setContentText("New Message")
-             .setContentText(message.toString())
+             .setContentText((CharSequence) message.get("message"))
              .setSound(ringtone)
              .setAutoCancel(true)
              .setContentIntent(pi).build();

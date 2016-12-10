@@ -22,7 +22,7 @@ $token=$_POST["token"];
 $url="https://gcm-http.googleapis.com/gcm/send";
 */
 
-$fields=array('data'=>array("message"=>$message),'to'=>$token);
+$fields=array('data'=>array('message'=>$message),'to'=>$token);
 $ch=curl_init();
 curl_setopt($ch,CURLOPT_URL,$url);
 curl_setopt($ch,CURLOPT_POST,true);
